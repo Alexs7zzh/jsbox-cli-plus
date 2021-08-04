@@ -14,7 +14,7 @@ const archiver = require("archiver");
 const _ = require("lodash");
 function isPackageDir(dir) {
     const filesSet = new Set(fs_1.readdirSync(dir));
-    for (const f of ['assets', 'scripts', 'strings', 'config.json', 'main.js']) {
+    for (const f of ['scripts', 'config.json', 'main.js']) {
         if (!filesSet.has(f)) {
             return false;
         }
