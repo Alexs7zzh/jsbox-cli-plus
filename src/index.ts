@@ -1,8 +1,8 @@
-import * as program from 'commander'
+import { program } from 'commander'
 import * as net from 'net'
-import * as path from 'path'
-import { showHost, watch, saveHost, build } from './actions'
-import * as log from './log'
+import path from 'path'
+import { showHost, watch, saveHost, build } from './actions.js'
+import * as log from './log.js'
 
 program
   .command('host')

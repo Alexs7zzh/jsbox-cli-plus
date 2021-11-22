@@ -1,6 +1,6 @@
 import { readdirSync, createWriteStream, readFileSync, existsSync, mkdirSync, lstatSync } from 'fs'
 import { join, dirname } from 'path'
-import * as archiver from 'archiver'
+import archiver from 'archiver'
 import * as _ from 'lodash'
 
 export function isPackageDir (dir: string) {

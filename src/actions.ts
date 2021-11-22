@@ -1,14 +1,14 @@
 import chalk from 'chalk'
 import { getHost, setHost } from './config'
-import * as log from './log'
-import { zipFolder, tryCatch, isPackageDir, getPackageName } from './utils'
+import * as log from './log.js'
+import { zipFolder, tryCatch, isPackageDir, getPackageName } from './utils.js'
 import * as fs from 'fs'
 import { tmpdir } from 'os'
 import { join, resolve, basename } from 'path'
 import * as chokidar from 'chokidar'
 import * as _ from 'lodash'
-import * as got from 'got'
-import * as FormData from 'form-data'
+import got from 'got'
+import FormData from 'form-data'
 import { spawn } from 'child_process'
 
 export function showHost () {

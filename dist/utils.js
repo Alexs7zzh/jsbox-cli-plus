@@ -1,19 +1,34 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.tryCatch = exports.mkdirp = exports.zipFolder = exports.getPackageName = exports.isPackageDir = void 0;
 const fs_1 = require("fs");
 const path_1 = require("path");
-const archiver = require("archiver");
-const _ = require("lodash");
+const archiver_1 = __importDefault(require("archiver"));
+const _ = __importStar(require("lodash"));
 function isPackageDir(dir) {
-    const filesSet = new Set(fs_1.readdirSync(dir));
+    const filesSet = new Set((0, fs_1.readdirSync)(dir));
     for (const f of ['scripts', 'config.json', 'main.js']) {
         if (!filesSet.has(f)) {
             return false;
@@ -23,26 +38,26 @@ function isPackageDir(dir) {
 }
 exports.isPackageDir = isPackageDir;
 function getPackageName(dir) {
-    const config = JSON.parse(fs_1.readFileSync(path_1.join(dir, 'config.json')).toString());
+    const config = JSON.parse((0, fs_1.readFileSync)((0, path_1.join)(dir, 'config.json')).toString());
     return _.get(config, 'info.name');
 }
 exports.getPackageName = getPackageName;
 function zipFolder(dir, path) {
-    if (!fs_1.existsSync(path_1.dirname(path))) {
-        mkdirp(path_1.dirname(path));
+    if (!(0, fs_1.existsSync)((0, path_1.dirname)(path))) {
+        mkdirp((0, path_1.dirname)(path));
     }
-    const archive = archiver('zip');
-    const s = fs_1.createWriteStream(path);
-    fs_1.readdirSync(dir).forEach(fileName => {
-        let isDir = fs_1.lstatSync(path_1.join(dir, fileName)).isDirectory();
+    const archive = (0, archiver_1.default)('zip');
+    const s = (0, fs_1.createWriteStream)(path);
+    (0, fs_1.readdirSync)(dir).forEach(fileName => {
+        let isDir = (0, fs_1.lstatSync)((0, path_1.join)(dir, fileName)).isDirectory();
         if (isDir && fileName === '.output') {
             return;
         }
         else if (isDir) {
-            archive.directory(path_1.join(dir, fileName), fileName);
+            archive.directory((0, path_1.join)(dir, fileName), fileName);
         }
         else {
-            archive.file(path_1.join(dir, fileName), { name: fileName });
+            archive.file((0, path_1.join)(dir, fileName), { name: fileName });
         }
     });
     archive.finalize();
@@ -53,25 +68,23 @@ function zipFolder(dir, path) {
 }
 exports.zipFolder = zipFolder;
 function mkdirp(path) {
-    if (fs_1.existsSync(path)) {
+    if ((0, fs_1.existsSync)(path)) {
         return;
     }
-    const parentDir = path_1.dirname(path);
-    if (!fs_1.existsSync(parentDir)) {
+    const parentDir = (0, path_1.dirname)(path);
+    if (!(0, fs_1.existsSync)(parentDir)) {
         mkdirp(parentDir);
     }
-    fs_1.mkdirSync(path);
+    (0, fs_1.mkdirSync)(path);
 }
 exports.mkdirp = mkdirp;
-function tryCatch(promise) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const ret = yield promise;
-            return [ret, null];
-        }
-        catch (e) {
-            return [null, e];
-        }
-    });
+async function tryCatch(promise) {
+    try {
+        const ret = await promise;
+        return [ret, null];
+    }
+    catch (e) {
+        return [null, e];
+    }
 }
 exports.tryCatch = tryCatch;

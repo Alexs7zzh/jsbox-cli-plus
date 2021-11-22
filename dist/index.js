@@ -1,25 +1,39 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const program = require("commander");
-const net = require("net");
-const path = require("path");
-const actions_1 = require("./actions");
-const log = require("./log");
-program
+const commander_1 = require("commander");
+const net = __importStar(require("net"));
+const path_1 = __importDefault(require("path"));
+const actions_js_1 = require("./actions.js");
+const log = __importStar(require("./log.js"));
+commander_1.program
     .command('host')
     .description('Show your current host IP')
     .action(() => {
-    actions_1.showHost();
+    (0, actions_js_1.showHost)();
 });
-program
+commander_1.program
     .command('set <hostIP>')
     .description('Set your host IP')
     .action((hostIP) => {
@@ -27,9 +41,9 @@ program
         log.error(`${hostIP} is not a valid IP`);
         process.exit(1);
     }
-    actions_1.saveHost(hostIP);
+    (0, actions_js_1.saveHost)(hostIP);
 });
-program
+commander_1.program
     .command('watch [item]')
     .option('-l, --logger', 'Start a debug worker')
     .description('Watching change in a directory or file')
@@ -38,17 +52,17 @@ program
     if (!item) {
         item = '.';
     }
-    item = path.resolve(pwd, item);
-    actions_1.watch(item, cmd.logger);
+    item = path_1.default.resolve(pwd, item);
+    (0, actions_js_1.watch)(item, cmd.logger);
 });
-program
+commander_1.program
     .command('build [dir]')
     .option('-o, --output <output>', 'Specify the output directory')
     .description('Build box package')
-    .action((dir, cmd) => __awaiter(this, void 0, void 0, function* () {
+    .action(async (dir, cmd) => {
     const pwd = process.cwd();
     dir = dir || '.';
-    dir = path.resolve(pwd, dir);
-    yield actions_1.build(dir, cmd.output);
-}));
-program.parse(process.argv);
+    dir = path_1.default.resolve(pwd, dir);
+    await (0, actions_js_1.build)(dir, cmd.output);
+});
+commander_1.program.parse(process.argv);

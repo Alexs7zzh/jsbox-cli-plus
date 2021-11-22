@@ -1,13 +1,13 @@
 {
   "name": "jsbox-cli-plus",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "基于jsbox-cli的JSBox代码同步工具",
+  "main": "./dist/index.js",
   "bin": {
     "jsbox": "./bin/jsbox"
   },
   "scripts": {
-    "build": "npm run lint && rimraf dist && tsc",
-    "lint": "tslint -p .",
+    "build": "rimraf dist && tsc",
     "dev": "tsc -w"
   },
   "author": "Fndroid",
@@ -21,25 +21,25 @@
     "jsbox-cli"
   ],
   "devDependencies": {
-    "@types/archiver": "^2.1.1",
+    "@types/archiver": "^5.1.1",
     "@types/chokidar": "^1.7.5",
     "@types/form-data": "^2.2.1",
-    "@types/got": "^8.3.1",
-    "@types/lowdb": "^1.0.1",
-    "@types/node": "^10.0.4",
-    "rimraf": "^2.6.2",
-    "tslint": "^5.10.0",
+    "@types/got": "^9.6.12",
+    "@types/lowdb": "^1.0.11",
+    "@types/node": "^16.11.9",
+    "rimraf": "^3.0.2",
+    "tslint": "^5.20.1",
     "tslint-config-standard": "^7.0.0",
-    "typescript": "^2.8.3"
+    "typescript": "^4.5.2"
   },
   "dependencies": {
-    "archiver": "^2.1.1",
-    "chalk": "^2.4.1",
-    "chokidar": "^2.0.3",
-    "commander": "^2.15.1",
-    "form-data": "^2.3.2",
-    "got": "^8.3.1",
-    "lodash": "^4.17.10",
+    "archiver": "^5.3.0",
+    "chalk": "^4.1.2",
+    "chokidar": "^3.5.2",
+    "commander": "^8.3.0",
+    "form-data": "^4.0.0",
+    "got": "^11.8.3",
+    "lodash": "^4.17.21",
     "lowdb": "^1.0.0"
   }
 }
